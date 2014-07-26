@@ -30,22 +30,22 @@ if(file.exists("./data/Source_Classification_Code.rds") & !exists("SCC")) {
 NEIBalt <- subset(NEI, fips == "24510")
 
 # Step 4: Summarize my data by year
-pm25mean <- ddply(NEIBalt, .(year), summarize, mean = mean(Emissions, na.rm = TRUE))
+pm25total <- ddply(NEIBalt, .(year), summarize, total = sum(Emissions, na.rm = TRUE))
 
 # Step 5: Plot the means by year on the screen
-with(pm25mean, plot(year, 
-                    mean,
+with(pm25total, plot(year, 
+                    total,
                     type = "l",
-                    main = "Average PM 2.5 Emissions in \nBaltimore City, MD from 1999-2008",
+                    main = "Total PM 2.5 Emissions in \nBaltimore City, MD from 1999-2008",
                     xlab = "",
-                    ylab = "Avg PM 2.5 Emissions (in tons)"))
+                    ylab = "Total PM 2.5 Emissions (in tons)"))
 
 # Step 6: Save the plot to a png file
-png("./plot2a.png")
-with(pm25mean, plot(year, 
-                    mean,
+png("./plot2t.png")
+with(pm25total, plot(year, 
+                    total,
                     type = "l",
-                    main = "Average PM 2.5 Emissions in \nBaltimore City, MD from 1999-2008",
+                    main = "Total PM 2.5 Emissions in \nBaltimore City, MD from 1999-2008",
                     xlab = "",
-                    ylab = "Average PM 2.5 Emissions (in tons)"))
+                    ylab = "Total PM 2.5 Emissions (in tons)"))
 dev.off()

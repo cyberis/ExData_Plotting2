@@ -37,21 +37,21 @@ SCCVehicles <- subset(SCC, grepl("Vehicles", EI.Sector))  ## 1,138 Levels with O
 NEIBaltVeh <- merge(NEIBalt, SCCVehicles, by.x = "SCC", by.y = "SCC") # Narrows NEIBalt from 2,096 down to 1,119 rows by 20 cols
 
 # Step 6: Summarize my data by year
-pm25mean <- ddply(NEIBaltVeh, .(year), summarize, mean = mean(Emissions, na.rm = TRUE))
+pm25total <- ddply(NEIBaltVeh, .(year), summarize, total = sum(Emissions, na.rm = TRUE))
 
 # Step 7: Create the plot using ggplot
-thePlot <- ggplot(pm25mean, aes(x = year, 
-                                y = mean)) + 
+thePlot <- ggplot(pm25total, aes(x = year, 
+                                 y = total)) + 
     geom_line() + 
     geom_point() + 
     xlab("Year") + 
-    ylab("Average PM 2.5 Emissions (in tons)") +
-    ggtitle("Average PM 2.5 Emissions From Motor Vehicles\nin Baltimore City, MD 1999 - 2008")
+    ylab("Total PM 2.5 Emissions (in tons)") +
+    ggtitle("Total PM 2.5 Emissions From Motor Vehicles\nin Baltimore City, MD 1999 - 2008")
 
 # Step 8: Print the plot to the screen
 print(thePlot)
 
 # Step 9: Save the plot to a png file
-png("./plot5a.png")
+png("./plot5t.png")
 print(thePlot)
 dev.off()

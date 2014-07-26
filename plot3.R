@@ -31,23 +31,23 @@ if(file.exists("./data/Source_Classification_Code.rds") & !exists("SCC")) {
 NEIBalt <- subset(NEI, fips == "24510")
 
 # Step 4: Summarize my data by year and type
-pm25mean <- ddply(NEIBalt, .(year, type), summarize, mean = mean(Emissions, na.rm = TRUE))
+pm25total <- ddply(NEIBalt, .(year, type), summarize, total = sum(Emissions, na.rm = TRUE))
 
 # Step 5: Create the plot using ggplot
-thePlot <- ggplot(pm25mean, aes(x = year, 
-                                y = mean, 
+thePlot <- ggplot(pm25total, aes(x = year, 
+                                y = total, 
                                 colour = type, 
                                 linetype = type)) + 
     geom_line() + 
     geom_point() + 
     xlab("Year") + 
-    ylab("Average PM 2.5 Emissions (in tons)") +
-    ggtitle("Average PM 2.5 Emissions for Baltimore City \nby Year and Type")
+    ylab("Total PM 2.5 Emissions (in tons)") +
+    ggtitle("Total PM 2.5 Emissions for Baltimore City \nby Year and Type")
 
 # Step 6: Print the plot to the screen
 print(thePlot)
 
 # Step 7: Save the plot to a png file
-png("./plot3a.png")
+png("./plot3t.png")
 print(thePlot)
 dev.off()

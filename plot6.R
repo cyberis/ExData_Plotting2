@@ -37,27 +37,27 @@ SCCVehicles <- subset(SCC, grepl("Vehicles", EI.Sector))  ## 1,138 Levels with O
 NEICityVeh <- merge(NEICities, SCCVehicles, by.x = "SCC", by.y = "SCC") # Narrows NEICities from 11,416 down to 2,099 rows by 20 cols
 
 # Step 6: Summarize my data by year and fips location
-pm25mean <- ddply(NEICityVeh, .(year, fips), summarize, mean = mean(Emissions, na.rm = TRUE))
+pm25total <- ddply(NEICityVeh, .(year, fips), summarize, total = sum(Emissions, na.rm = TRUE))
 
 # Step 7: Create the plot using ggplot
-thePlot <- ggplot(pm25mean, aes(x = year, 
-                                y = mean,
-                                colour = fips,
-                                linetype = fips)) + 
+thePlot <- ggplot(pm25total, aes(x = year, 
+                                 y = total,
+                                 colour = fips,
+                                 linetype = fips)) + 
     geom_line() + 
     geom_point() + 
     xlab("Year") + 
-    ylab("Average PM 2.5 Emissions (in tons)") +
+    ylab("Total PM 2.5 Emissions (in tons)") +
     scale_colour_discrete(name = "Cities",
                         breaks = c("06037", "24510"),
                         labels = c("Los Angeles", "Baltimore")) +
     guides(linetype = FALSE) +
-    ggtitle("Average PM 2.5 Emissions From Motor Vehicles\n Baltimore City vs Los Angles, CA, MD 1999 - 2008")
+    ggtitle("Total PM 2.5 Emissions From Motor Vehicles\n Baltimore City vs Los Angles, CA, MD 1999 - 2008")
 
 # Step 8: Print the plot to the screen
 print(thePlot)
 
 # Step 9: Save the plot to a png file
-png("./plot6a.png")
+png("./plot6t.png")
 print(thePlot)
 dev.off()

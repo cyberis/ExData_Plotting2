@@ -27,22 +27,22 @@ if(file.exists("./data/Source_Classification_Code.rds") & !exists("SCC")) {
 }
 
 # Step 3: Summarize my data by year
-pm25mean <- ddply(NEI, .(year), summarize, mean = mean(Emissions, na.rm = TRUE))
+pm25total <- ddply(NEI, .(year), summarize, total = sum(Emissions, na.rm = TRUE))
 
-# Step 4: Plot the means by year on the screen
-with(pm25mean, plot(year, 
-                    mean,
+# Step 4: Plot the totals by year on the screen
+with(pm25total, plot(year, 
+                    total,
                     type = "l",
-                    main = "Average PM 2.5 Emissions in the US from 1999-2008",
+                    main = "Total PM 2.5 Emissions in the US from 1999-2008",
                     xlab = "",
-                    ylab = "Avg PM 2.5 Emissions (in tons)"))
+                    ylab = "Total PM 2.5 Emissions (in tons)"))
 
 # Step 5: Save the plot to a png file
-png("./plot1a.png")
-with(pm25mean, plot(year, 
-                    mean,
+png("./plot1t.png")
+with(pm25total, plot(year, 
+                    total,
                     type = "l",
-                    main = "Average PM 2.5 Emissions in the US from 1999-2008",
+                    main = "Total PM 2.5 Emissions in the US from 1999-2008",
                     xlab = "",
-                    ylab = "Average PM 2.5 Emissions (in tons)"))
+                    ylab = "Total PM 2.5 Emissions (in tons)"))
 dev.off()

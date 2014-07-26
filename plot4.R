@@ -34,21 +34,21 @@ SCCCoal <- subset(SCC, grepl("Coal", EI.Sector))  ## 99 Levels with Coal Combust
 NEICoal <- merge(NEI, SCCCoal, by.x = "SCC", by.y = "SCC") # Narrows NEI down to 28,480 rows by 20 cols
 
 # Step 5: Summarize my data by year
-pm25mean <- ddply(NEICoal, .(year), summarize, mean = mean(Emissions, na.rm = TRUE))
+pm25total <- ddply(NEICoal, .(year), summarize, total = sum(Emissions, na.rm = TRUE))
 
 # Step 6: Create the plot using ggplot
-thePlot <- ggplot(pm25mean, aes(x = year, 
-                                y = mean)) + 
+thePlot <- ggplot(pm25total, aes(x = year, 
+                                 y = total)) + 
     geom_line() + 
     geom_point() + 
     xlab("Year") + 
-    ylab("Average PM 2.5 Emissions (in tons)") +
-    ggtitle("Average PM 2.5 Emissions From Coal Combustion 1999 - 2008 (US)")
+    ylab("Total PM 2.5 Emissions (in tons)") +
+    ggtitle("Total PM 2.5 Emissions From Coal Combustion 1999 - 2008 (US)")
 
 # Step 7: Print the plot to the screen
 print(thePlot)
 
 # Step 8: Save the plot to a png file
-png("./plot4a.png")
+png("./plot4t.png")
 print(thePlot)
 dev.off()
